@@ -142,10 +142,20 @@ final class ProductScraper
         }
 
         $images = [];
+        $videos = [];
 
         foreach ($data['photos'] as $photo) {
             if ($photo['img'] ?? null) {
                 $images[] = $photo['img'];
+                continue;
+            }
+
+            if ($photo['html'] ?? null) {
+                $video = preg_replace('/.+href="(.+?)".+/', '$1', $photo['html']);
+                if ($video) {
+                    $videos[] = $video;
+                }
+                continue;
             }
         }
 
@@ -200,6 +210,7 @@ final class ProductScraper
             'dimensions' => $dimensions,
             'base' => $basePrice,
             'images' => $images,
+            'videos' => $videos,
             'description' => $description,
             'composition' => $composition,
             'url' => str($title)->slug('-', 'ru')->value(),

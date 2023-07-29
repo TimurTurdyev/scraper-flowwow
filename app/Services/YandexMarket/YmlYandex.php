@@ -83,6 +83,10 @@ final class YmlYandex
                 $xml .= sprintf('<picture>%s</picture>', $image);
             }
 
+            if ($value['videos']) {
+                $xml .= sprintf('<video>%s</video>', $value['videos'][0]);
+            }
+
             $xml .= sprintf('<description>%s</description>', rtrim($value['description'], " \t\n\r\0\x0B.") . '. ' . implode('. ', $value['composition']));
             $xml .= '</offer>';
         }
