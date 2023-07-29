@@ -59,6 +59,12 @@ final class YmlYandex
             $xml .= '<available>true</available>';
 
             if ($value['price'] < $value['base']) {
+                $price = $value['base'] - ((5 / 100) * $value['base']);
+
+                if ($value['price'] > $price) {
+                    $value['price'] = $price;
+                }
+
                 $xml .= sprintf('<price>%d</price><oldprice>%d</oldprice>', $value['price'], $value['base']);
             } else {
                 $xml .= sprintf('<price>%d</price>', $value['price']);
