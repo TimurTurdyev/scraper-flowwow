@@ -74,6 +74,7 @@ final class YmlYandex
                 $xml .= '<dimensions>';
                 $xml .= implode('/', $value['dimensions']);
                 $xml .= '</dimensions>';
+                $xml .= '<weight>1</weight>';
             }
 
             $xml .= sprintf('<categoryId>%s</categoryId>', $product->category->id);
