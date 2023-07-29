@@ -14,4 +14,9 @@ class Product extends Model
     protected $casts = [
         'data' => 'array',
     ];
+
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

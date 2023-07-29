@@ -23,7 +23,7 @@ final class ProductScraper
 
     public function __construct(WebDriver $driver)
     {
-        $this->shopUrl = config('scrapper.flowwow_shop');
+        $this->shopUrl = config('scraper.flowwow_shop');
         $this->driver = $driver;
     }
 
@@ -166,12 +166,12 @@ final class ProductScraper
             $descHtml = $node->first('.desc')->innerHtml();
 
             $compositionDescription = str($descHtml)
-                ->replace([
-                    PHP_EOL, '<br>', '<br/>', '<span class="hide">', '</span>', '  '
-                ], [
-                    '', ', ', ', ', '', '', ' '
-                ])
                 ->replaceMatches('/<a href.+<\/a>/', '')
+                ->replace([
+                    PHP_EOL, '<br>', '<br/>', '<span class="hide">', '</span>', '  ', ',.'
+                ], [
+                    '', ', ', ', ', '', '', ' ', ','
+                ])
                 ->rtrim(',')
                 ->trim();
 

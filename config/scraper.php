@@ -8,4 +8,9 @@ return [
             'port' => env('SELENIUM_PORT', '4444'),
         ],
     ],
+    'yandex' => [
+        'device_id' => env('YANDEX_DEVICE_ID'),
+        'client_id' => env('YANDEX_CLIENT_ID'),
+        'client_secret' => env('YANDEX_CLIENT_SECRET'),
+    ],
 ];

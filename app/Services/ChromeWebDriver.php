@@ -11,8 +11,8 @@ class ChromeWebDriver
 
     public function __construct()
     {
-        $host = config('scrapper.selenium.chrome.host');
-        $port = config('scrapper.selenium.chrome.port');
+        $host = config('scraper.selenium.chrome.host');
+        $port = config('scraper.selenium.chrome.port');
 
         $caps = DesiredCapabilities::firefox();
 

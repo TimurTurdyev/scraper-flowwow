@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\ScrapperFactory;
 use DiDom\Exceptions\InvalidSelectorException;
@@ -40,10 +41,13 @@ class ScrapFlowwowCommand extends Command
         $this->info(sprintf('[%s] (Уникальных %s, всего %s товаров) в %s категориях', now(), $data['uniqueIdTotal'], $data['productTotal'], $data['categoryTotal']));
 
         $this->info(sprintf('[%s] Удаление всех товаров', now()));
+        Category::query()->truncate();
         Product::query()->truncate();
 
         foreach ($data['data'] as $item) {
             $this->info(sprintf('[%s] Получение информации по id товара из [%s] категории', now(), $item['categoryName']));
+            $category = new Category(['name' => $item['categoryName']]);
+            $category->save();
 
             foreach ($item['products'] as $id) {
                 $product = Product::query()->find($id);
@@ -52,14 +56,14 @@ class ScrapFlowwowCommand extends Command
                     $this->info(sprintf('[%s] Товар [%s] существует, добавлена категория [%s]', now(), $id, $item['categoryName']));
                     $value = $product->data;
                     $value['categories'] = [...$product->data['categories'], ...[$item['categoryName']]];
-                    $product->update(['data' => $value]);
+                    $product->update(['data' => $value, 'category_id' => $category->id]);
                     continue;
                 }
 
                 $this->info(sprintf('[%s] Обращение к [%s]', now(), $sc->getProductUrlDetail($id)));
 
                 $value = $sc->productDetail($item['categoryName'], $id);
-                (new Product(['id' => $id, 'data' => $value]))->save();
+                (new Product(['id' => $id, 'data' => $value, 'category_id' => $category->id]))->save();
             }
         }
 
