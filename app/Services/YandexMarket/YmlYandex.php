@@ -54,7 +54,7 @@ final class YmlYandex
 
         foreach (Product::query()->with('category')->get() as $product) {
             $value = $product->data;
-            $xml .= sprintf('<offer id="%d"></offer>', $product->id);
+            $xml .= sprintf('<offer id="%d">', $product->id);
             $xml .= sprintf('<name>%s</name>', $value['title']);
             $xml .= '<available>true</available>';
 
@@ -71,6 +71,7 @@ final class YmlYandex
             }
 
             $xml .= sprintf('<description>%s</description>', rtrim($value['description'], " \t\n\r\0\x0B.") . '. ' . implode('. ', $value['composition']));
+            $xml .= '</offer>';
         }
 
         $xml .= '</offers>';
