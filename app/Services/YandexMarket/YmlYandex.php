@@ -70,6 +70,12 @@ final class YmlYandex
                 $xml .= sprintf('<price>%d</price>', $value['price']);
             }
 
+            if ($value['dimensions']) {
+                $xml .= '<dimensions>';
+                $xml .= implode('/', $value['dimensions']);
+                $xml .= '</dimensions>';
+            }
+
             $xml .= sprintf('<categoryId>%s</categoryId>', $product->category->id);
 
             foreach ($value['images'] as $image) {

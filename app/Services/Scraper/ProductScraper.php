@@ -160,6 +160,8 @@ final class ProductScraper
 
         $composition = [];
 
+        $dimensions = [];
+
         foreach ($dom->find('.product-desc-line:not(.product-desc-line-mobile)') as $node) {
             $compositionTitle = str($node->first('.title')->text())->trim()->value();
 
@@ -175,6 +177,17 @@ final class ProductScraper
                 ->rtrim(',')
                 ->trim();
 
+            if (str($compositionTitle)->contains('размер', true)) {
+                $dimensions = str($compositionDescription)
+                    ->trim(',')
+                    ->explode(',')
+                    ->map(fn($v) => preg_replace('/[^0-9]/', '', $v))
+                    ->filter(fn($v) => $v);
+                if ($dimensions->count()) {
+                    $dimensions->add($dimensions->last());
+                }
+            }
+
             $composition[] = sprintf('%s: %s', $compositionTitle, $compositionDescription);
         }
 
@@ -184,6 +197,7 @@ final class ProductScraper
             'categories' => [$categoryName],
             'title' => $title,
             'price' => $price,
+            'dimensions' => $dimensions,
             'base' => $basePrice,
             'images' => $images,
             'description' => $description,
