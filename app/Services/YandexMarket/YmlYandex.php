@@ -18,6 +18,7 @@ final class YmlYandex
         $xml .= $this->products();
         $xml .= '</shop>';
         $xml .= '</yml_catalog>';
+
         return $xml;
     }
 
@@ -49,7 +50,8 @@ final class YmlYandex
 
     public function products(): string
     {
-        $xml = '';
+        $xml = '<offers>';
+
         foreach (Product::query()->with('category')->get() as $product) {
             $value = $product->data;
             $xml .= sprintf('<offer id="%d"></offer>', $product->id);
@@ -68,8 +70,10 @@ final class YmlYandex
                 $xml .= sprintf('<picture>%s</picture>', $image);
             }
 
-            $xml .= sprintf('<description>%s</description>', rtrim($value['description'], " \t\n\r\0\x0B.") . '. ' .implode('. ', $value['composition']));
+            $xml .= sprintf('<description>%s</description>', rtrim($value['description'], " \t\n\r\0\x0B.") . '. ' . implode('. ', $value['composition']));
         }
+
+        $xml .= '</offers>';
 
         return $xml;
     }
