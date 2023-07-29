@@ -9,6 +9,7 @@ use DiDom\Exceptions\InvalidSelectorException;
 use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class ScrapFlowwowCommand extends Command
@@ -68,6 +69,9 @@ class ScrapFlowwowCommand extends Command
         }
 
         $this->info(sprintf('[%s] Время затраченное на парсинг %s секунд', now(), now()->diff($timer)->s));
+        $this->info(sprintf('[%s] Очистка кеша yml_yandex', now()));
+
+        Cache::forget('yml_yandex');
 
         return CommandAlias::SUCCESS;
     }
