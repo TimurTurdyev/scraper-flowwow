@@ -13,4 +13,9 @@ return [
         'client_id' => env('YANDEX_CLIENT_ID'),
         'client_secret' => env('YANDEX_CLIENT_SECRET'),
     ],
+    'shop' => [
+        'name' => env('SHOP_NAME'),
+        'company' => env('SHOP_COMPANY'),
+        'phone' => env('SHOP_PHONE'),
+    ]
 ];
