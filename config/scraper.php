@@ -13,6 +13,10 @@ return [
         'client_id' => env('YANDEX_CLIENT_ID'),
         'client_secret' => env('YANDEX_CLIENT_SECRET'),
     ],
+    'ozon' => [
+        'client_id' => env('OZON_CLIENT_ID'),
+        'api_key' => env('OZON_API_KEY'),
+    ],
     'shop' => [
         'name' => env('SHOP_NAME'),
         'company' => env('SHOP_COMPANY'),

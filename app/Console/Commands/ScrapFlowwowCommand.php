@@ -42,12 +42,14 @@ class ScrapFlowwowCommand extends Command
         $this->info(sprintf('[%s] (Уникальных %s, всего %s товаров) в %s категориях', now(), $data['uniqueIdTotal'], $data['productTotal'], $data['categoryTotal']));
 
         $this->info(sprintf('[%s] Удаление всех товаров', now()));
-        Category::query()->truncate();
         Product::query()->truncate();
 
         foreach ($data['data'] as $item) {
             $this->info(sprintf('[%s] Получение информации по id товара из [%s] категории', now(), $item['categoryName']));
-            $category = new Category(['name' => $item['categoryName']]);
+            $category = Category::query()
+                ->where('name', $item['categoryName'])
+                ->firstOrNew(['name' => $item['categoryName']]);
+
             $category->save();
 
             foreach ($item['products'] as $id) {
