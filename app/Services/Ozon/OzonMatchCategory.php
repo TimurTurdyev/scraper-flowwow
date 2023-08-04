@@ -4,35 +4,31 @@ namespace App\Services\Ozon;
 
 class OzonMatchCategory
 {
+    private array $categories = [];
+
     public function apply(array $categories): array
     {
-        $items = [];
-
-        foreach ($categories as $category) {
-            foreach ($this->categoriesParse($category['children'], $category['title']) as $value) {
-                $items[] = $value;
-            }
-        }
-
-        return $items;
+        $this->categoriesParse($categories);
+        return $this->categories;
     }
 
-    private function categoriesParse(array $children, string $pathName): array
+    private function categoriesParse(array $categories, string $pathName = ''): void
     {
-        $items = [];
+        foreach ($categories as $item) {
+            $currentPath = $item['title'];
 
-        foreach ($children as $item) {
-            $item['title'] = sprintf('%s / %s', $pathName, $item['title']);
-            $values = $this->categoriesParse($item['children'], $item['title']);
-            if ($values) {
-                foreach ($values as $value) {
-                    $items[] = $value;
-                }
+            if ($pathName) {
+                $currentPath = sprintf('%s / %s', $pathName, $currentPath);
+            }
+
+            $item['title'] = $currentPath;
+
+            if (!$item['children']) {
+                $this->categories[] = $item;
                 continue;
             }
-            $items[] = $item;
-        }
 
-        return $items;
+            $this->categoriesParse($item['children'], $item['title']);
+        }
     }
 }

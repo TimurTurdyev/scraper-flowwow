@@ -43,6 +43,7 @@ class OzonCategoryCommand extends Command
         $categories = $categoryService->tree();
         $this->info(sprintf('[%s] Получили %s вложенных категорий', now(), count($categories)));
 
+        file_put_contents('./app/Services/Ozon/categories.json', json_encode($categories, JSON_UNESCAPED_UNICODE));
         $ozonMatchCategory = new OzonMatchCategory();
         $items = $ozonMatchCategory->apply($categories);
 
