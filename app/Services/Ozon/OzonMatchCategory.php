@@ -12,7 +12,7 @@ class OzonMatchCategory
         return $this->categories;
     }
 
-    private function categoriesParse(array $categories, string $pathName = ''): void
+    public function categoriesParse(array $categories, string $pathName = ''): void
     {
         foreach ($categories as $item) {
             $currentPath = $item['title'];

@@ -8,7 +8,8 @@
                 <thead>
                 <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Название</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Товаров</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ozon
                         ID
                     </th>
@@ -33,6 +34,14 @@
                         </td>
                         <td>
                             <p class="text-xs text-secondary mb-0">{{ $category['name'] }}</p>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                            @if( $category['products_count'] )
+                                <span
+                                    class="badge badge-sm bg-gradient-success">{{ $category['products_count'] }}</span>
+                            @else
+                                <span class="badge badge-sm bg-gradient-faded-dark">0</span>
+                            @endif
                         </td>
                         <td class="align-middle text-center text-sm">
                             @if( $category['ozon_category_id'] )
@@ -70,7 +79,7 @@
         <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="modal-title-default">Type your modal title</h6>
+                    <h6 class="modal-title" id="modal-title-default">Поиск категорий OZON</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>

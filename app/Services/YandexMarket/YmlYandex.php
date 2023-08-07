@@ -52,7 +52,7 @@ final class YmlYandex
     {
         $xml = '<offers>';
 
-        foreach (Product::query()->with('category')->get() as $product) {
+        foreach (Product::query()->with('category')->where('yandex', '=', 1)->get() as $product) {
             $value = $product->data;
             $xml .= sprintf('<offer id="%d">', $product->id);
             $xml .= sprintf('<name>%s</name>', $value['title']);
