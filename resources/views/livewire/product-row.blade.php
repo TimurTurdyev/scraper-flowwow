@@ -10,7 +10,7 @@ $item = $product->data;
             <img src="{{ $item['images'][0] ?? '' }}" class="avatar avatar-sm me-3">
         </div>
     </td>
-    <td class="text-center">
+    <td class="text-center table-row-w400">
         <p class="text-xs font-weight-bold mb-0">{{ $item['title'] }}</p>
     </td>
     <td class="text-center">

@@ -15,3 +15,11 @@
 
 // Custom Variables
 @import "dashboard/custom/styles";
+
+.table-row-w400 {
+    max-width: 400px;
+    white-space: normal;
+    p {
+        white-space: normal;
+    }
+}
