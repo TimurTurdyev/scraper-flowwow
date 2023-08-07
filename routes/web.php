@@ -23,6 +23,15 @@ Route::get('/yandex-yml', function () {
     return response($content, 200, ['Content-Type' => 'application/xml']);
 });
 
+Route::get('/ozon-yml', function () {
+    $content = Cache::rememberForever('yml_ozon', function () {
+        $client = new \App\Services\Ozon\YmlOzon();
+        return $client->apply();
+    });
+
+    return response($content, 200, ['Content-Type' => 'application/xml']);
+});
+
 Route::get('/', function () {
     return redirect('/login');
 });

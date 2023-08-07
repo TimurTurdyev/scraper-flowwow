@@ -24,13 +24,14 @@ class ProductRow extends Component
     {
         $this->product->update(['yandex' => $this->yandex]);
         Cache::forget('yml_yandex');
-
+        Cache::forget('yml_ozon');
     }
 
     public function updatedOzon(): void
     {
-        $this->product->update(['ozon' => $this->yandex]);
+        $this->product->update(['ozon' => $this->ozon]);
         Cache::forget('yml_yandex');
+        Cache::forget('yml_ozon');
     }
 
     public function render(): View

@@ -1,0 +1,15 @@
+<yml_catalog date="2022-08-10T14:37:38+03:00">
+    <shop>
+        <offers>
+            <offer id="АРТИКУЛ_В_ЛК">
+                <price>9760</price>
+                <oldprice>10736</oldprice>
+                <min_price>8000</min_price>
+                <outlets>
+                    <outlet instock="10" warehouse_name="склад 1"></outlet>
+                    <outlet instock="13" warehouse_name="склад 2"></outlet>
+                </outlets>
+            </offer>
+        </offers>
+    </shop>
+</yml_catalog>

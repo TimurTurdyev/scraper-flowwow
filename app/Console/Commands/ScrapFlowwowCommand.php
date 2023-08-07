@@ -74,6 +74,7 @@ class ScrapFlowwowCommand extends Command
         $this->info(sprintf('[%s] Очистка кеша yml_yandex', now()));
 
         Cache::forget('yml_yandex');
+        Cache::forget('yml_ozon');
 
         return CommandAlias::SUCCESS;
     }
