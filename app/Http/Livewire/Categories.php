@@ -29,15 +29,22 @@ class Categories extends Component
 
     public function updatedSearch($search): void
     {
-        if (str($search)->length() < 3) {
+        $querySearch = str($search)
+            ->replaceMatches('/[^\p{L}\p{N}]/u', '')
+            ->lower()
+            ->slug('', 'ru');
+
+        if ($querySearch->length() < 3) {
             $this->matchCategories = [];
             return;
         }
 
+        $search = $querySearch->toString();
+
         $this->matchCategories = OzonCategory::query()
-            ->where('name', 'like', $search . '%')
-            ->orWhere('name', 'like', '%' . $search . '%')
-            ->orWhere('name', 'like', '%' . $search)
+            ->where('search', 'like', $search . '%')
+            ->orWhere('search', 'like', '%' . $search . '%')
+            ->orWhere('search', 'like', '%' . $search)
             ->limit(1000)
             ->pluck('name', 'id')
             ->toArray();

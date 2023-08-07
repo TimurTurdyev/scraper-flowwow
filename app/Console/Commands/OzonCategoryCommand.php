@@ -57,19 +57,25 @@ class OzonCategoryCommand extends Command
         foreach ($items as $item) {
             $category = OzonCategory::query()->find($item['category_id']);
 
+            $search = str($item['title'])
+                ->replaceMatches('/[^\p{L}\p{N}]/u', '')
+                ->lower()
+                ->slug('', 'ru')
+                ->toString();
+
             if ($category) {
-                if ($item['title'] === $category->name) {
+                if ($search === $category->search) {
                     $this->info(sprintf('[%s] Категория [%d] существует, имя не изменено', now(), $category->id));
                     continue;
                 }
                 $this->info(sprintf('[%s] Категория [%d] существует, изменилось название [%s]', now(), $category->id, $item['title']));
-                $category->update(['name' => $item['title']]);
+                $category->update(['name' => $item['title'], 'search' => $search]);
                 $processed['updated'] += 1;
                 continue;
             }
 
             $this->info(sprintf('[%s] Добавлена новая категория [%d], название [%s]', now(), $item['category_id'], $item['title']));
-            $category = new OzonCategory(['id' => $item['category_id'], 'name' => $item['title']]);
+            $category = new OzonCategory(['id' => $item['category_id'], 'name' => $item['title'], 'search' => $search]);
             $category->save();
             $processed['created'] += 1;
         }

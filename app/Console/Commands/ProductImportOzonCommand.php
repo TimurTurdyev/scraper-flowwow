@@ -6,6 +6,7 @@ use App\Models\Product;
 use Gam6itko\OzonSeller\Service\V2\ProductService;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 use Symfony\Component\HttpClient\Psr18Client;
 
 class ProductImportOzonCommand extends Command
@@ -41,9 +42,14 @@ class ProductImportOzonCommand extends Command
         $client = new Psr18Client();
         $productService = new ProductService($config, $client);
 
+        $processed = [
+            'send' => 0,
+            'miss' => 0,
+        ];
+
         $this->info(sprintf('[%s] Всего (%d) товаров', now(), Product::query()->count()));
 
-        Product::query()->with('category')->chunk(100, function (Collection $items, $index) use ($productService) {
+        Product::query()->with('category')->chunk(100, function (Collection $items, $index) use ($productService, &$processed) {
             $this->info(sprintf('[%s] Получаем (%d-%d) товаров', now(), $index, $items->count()));
             $products = [];
             /**
@@ -54,6 +60,7 @@ class ProductImportOzonCommand extends Command
                 $value = $item->data;
                 $category = $item->category;
                 if (!$category || !$category->ozon_category_id) {
+                    $processed['miss'] += 1;
                     continue;
                 }
 
@@ -94,6 +101,7 @@ class ProductImportOzonCommand extends Command
                 if ($item['base'] > $item['price']) {
                     $products[$i]['old_price'] = $item['base'];
                 }
+                $processed['send'] += 1;
             }
 
             if (!$products) {
@@ -105,5 +113,9 @@ class ProductImportOzonCommand extends Command
             $response = $productService->import($products);
             $this->info(sprintf('[%s] Ответ %s', now(), $response['task_id'] ?? ''));
         });
+
+        $this->info(sprintf('[%s] Процесс закончен отправлено [%d], пропущено [%d]', now(), $processed['send'], $processed['miss']));
+
+        return CommandAlias::SUCCESS;
     }
 }
