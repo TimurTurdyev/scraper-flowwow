@@ -14,7 +14,7 @@ use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class ScrapFlowwowCommand extends Command
 {
-    protected $signature = 'scrap:flowwow';
+    protected $signature = 'flowwow:scrap';
 
     protected $description = 'Scrap flowwow.com';
 

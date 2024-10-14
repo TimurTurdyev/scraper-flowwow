@@ -5,6 +5,7 @@ use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\ResetPassword;
 use App\Http\Livewire\Auth\SignUp;
 use App\Http\Livewire\Billing;
+use App\Http\Livewire\Categories;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Products;
 use App\Http\Livewire\Profile;
@@ -45,6 +46,7 @@ Route::get('/reset-password/{id}', ResetPassword::class)->name('reset-password')
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/categories', Categories::class)->name('categories');
     Route::get('/products', Products::class)->name('products');
     Route::get('/billing', Billing::class)->name('billing');
     Route::get('/profile', Profile::class)->name('profile');

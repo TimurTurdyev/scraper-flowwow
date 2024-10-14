@@ -27,15 +27,12 @@
             @endforeach
         </div>
         <div class="row my-4">
-            <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
-                <livewire:categories></livewire:categories>
-            </div>
-            <div class="col-lg-4 col-md-6">
+            <div class="col-12 mb-md-0 mb-4">
                 <div class="card h-100">
                     <div class="card-header pb-0">
                         <h6>Ozon statistic</h6>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="min-height: 500px;">
                         <p class="text-sm">
                             <span class="font-weight-bold">
                                 Всего {{ $ozonStatistic['total']['usage'] }}
@@ -54,6 +51,8 @@
                         </p>
                     </div>
                 </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
             </div>
         </div>
     </div>

@@ -48,10 +48,10 @@ final class ProductScraper
 
         $idExists = [];
 
-        $elements = $this->driver->findElements(WebDriverBy::cssSelector('#js_product_wrapper .shop-product-block'));
+        $elements = $this->driver->findElements(WebDriverBy::cssSelector('.shop-category .category-wrapper'));
 
         foreach ($elements as $index => $element) {
-            $categoryName = $element->findElement(WebDriverBy::cssSelector('.header .title.store_products_title'))->getText();
+            $categoryName = $element->findElement(WebDriverBy::cssSelector('.category-name'))->getText();
 
             $data['categoryTotal'] += 1;
 
@@ -60,7 +60,7 @@ final class ProductScraper
                 'products' => [],
             ];
 
-            $products = $element->findElements(WebDriverBy::cssSelector('.shop-product.js-product-popup'));
+            $products = $element->findElements(WebDriverBy::cssSelector('.product-card'));
 
             foreach ($products as $product) {
                 $id = $product->getAttribute('data-id');
@@ -90,11 +90,11 @@ final class ProductScraper
         $links = 0;
 
         $this->driver->wait(10, 1000)->until(
-            WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::id('js_product_wrapper'))
+            WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::cssSelector('.shop-category'))
         );
 
         while (true) {
-            $elements = $this->driver->findElements(WebDriverBy::cssSelector('#js_product_wrapper .store_readmore > a'));
+            $elements = $this->driver->findElements(WebDriverBy::cssSelector('.shop-category .category-wrapper > .wrapper > button'));
 
             if (!count($elements)) {
                 break;

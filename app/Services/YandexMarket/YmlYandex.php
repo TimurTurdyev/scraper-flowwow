@@ -58,14 +58,14 @@ final class YmlYandex
             $xml .= sprintf('<name>%s</name>', $value['title']);
             $xml .= '<available>true</available>';
 
-            if ($value['price'] < $value['base']) {
-                $price = $value['base'] - ((5 / 100) * $value['base']);
+            if ($value['price'] < $value['old_price']) {
+                $price = $value['old_price'] - ((5 / 100) * $value['old_price']);
 
                 if ($value['price'] > $price) {
                     $value['price'] = $price;
                 }
 
-                $xml .= sprintf('<price>%d</price><oldprice>%d</oldprice>', $value['price'], $value['base']);
+                $xml .= sprintf('<price>%d</price><oldprice>%d</oldprice>', $value['price'], $value['old_price']);
             } else {
                 $xml .= sprintf('<price>%d</price>', $value['price']);
             }
@@ -86,11 +86,11 @@ final class YmlYandex
                 $xml .= sprintf('<picture>%s</picture>', $image);
             }
 
-            if ($value['videos']) {
-                $xml .= sprintf('<video>%s</video>', $value['videos'][0]);
+            if ($value['video']) {
+                $xml .= sprintf('<video>%s</video>', $value['video']);
             }
 
-            $xml .= sprintf('<description>%s</description>', rtrim($value['description'], " \t\n\r\0\x0B.") . '. ' . implode('. ', $value['composition']));
+            $xml .= sprintf('<description>%s</description>', rtrim($value['description'], " \t\n\r\0\x0B."));
             $xml .= '</offer>';
         }
 

@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'ozon_category_id'];
+    protected $guarded = [];
 
     public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

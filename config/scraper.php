@@ -2,6 +2,7 @@
 
 return [
     'flowwow_shop' => env('FLOWWOW_SHOP'),
+    'flowwow_shop_id' => env('FLOWWOW_SHOP_ID'),
     'selenium' => [
         'chrome' => [
             'host' => env('SELENIUM_HOST', 'http://localhost'),

@@ -74,6 +74,7 @@ class Categories extends Component
         $this->categories = Category::query()
             ->with('ozonCategory')
             ->withCount('products')
+            ->orderBy('id')
             ->get()
             ->map(function (Category $category) {
                 $data = $category->toArray();

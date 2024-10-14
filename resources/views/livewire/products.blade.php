@@ -20,14 +20,11 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Фото
                                 </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Название
                                 </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Основная категория при парсинге
-                                </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    В категориях на flowwow
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Категория на flowwow
                                 </th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Yandex

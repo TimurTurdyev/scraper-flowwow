@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Product;
-use Gam6itko\OzonSeller\Service\V2\ProductService;
+use App\Services\FixProductImportService;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\Console\Command\Command as CommandAlias;
@@ -40,7 +40,7 @@ class ProductImportOzonCommand extends Command
 
         $this->info(sprintf('[%s] Настраиваем клиент Ozon', now()));
         $client = new Psr18Client();
-        $productService = new ProductService($config, $client);
+        $productService = new FixProductImportService($config, $client);
 
         $processed = [
             'send' => 0,
@@ -76,10 +76,6 @@ class ProductImportOzonCommand extends Command
 
                     $description = $value['description'];
 
-                    if ($value['composition']) {
-                        $description .= implode(' / ', $value['composition']);
-                    }
-
                     $products[$i] = [
                         'description' => $description,
                         'category_id' => $category->ozon_category_id,
@@ -96,8 +92,9 @@ class ProductImportOzonCommand extends Command
                         'images' => $images,
                         'attributes' => [],
                     ];
-                    if ($item['base'] > $item['price']) {
-                        $products[$i]['old_price'] = $item['base'];
+
+                    if ($item['old_price'] > $item['price']) {
+                        $products[$i]['old_price'] = $item['old_price'];
                     }
                     $processed['send'] += 1;
                 }
